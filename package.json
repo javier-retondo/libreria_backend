@@ -4,9 +4,9 @@
   "description": "Backend de la tienda de libros online",
   "main": "index.js",
   "scripts": {
-  "dev": "nodemon --watch src --ext ts --exec ts-node src/index.ts",
-  "seed": "ts-node src/seed.ts",
-  "build": "tsc"
+    "dev": "nodemon --watch src --ext ts --exec ts-node src/index.ts",
+    "seed": "ts-node src/seed.ts",
+    "build": "tsc"
   },
   "keywords": [
     "libreria"
@@ -19,13 +19,18 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^3.14.1"
+    "mysql2": "^3.14.1",
+    "redis": "^5.1.1",
+    "sequelize": "^6.37.7"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.15.29",
+    "@types/sequelize": "^4.28.20",
+    "sequelize-cli": "^6.6.3",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   }
