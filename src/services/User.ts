@@ -118,7 +118,10 @@ const getAllUsers = async (
   },
   search?: string,
   rol?: UserRole,
-): Promise<IUser[]> => {
+): Promise<{
+  rows: IUser[];
+  count: number;
+}> => {
   const {
     page = 1,
     pageSize = 10000,
@@ -135,18 +138,21 @@ const getAllUsers = async (
   if (rol) {
     where.push({ rol });
   }
-  const users = await User.findAll({
+  const users = await User.findAndCountAll({
     where: where.length > 0 ? { [Op.or]: where } : undefined,
     order: [[sortBy, sortOrder]],
     offset: (page - 1) * pageSize,
     limit: pageSize,
   })
     .then((users) => {
-      return users.map((user) => {
-        const userData = user.dataValues;
-        delete userData.password;
-        return userData;
-      });
+      return {
+        rows: users.rows.map((user) => {
+          const userData = user.dataValues;
+          delete userData.password;
+          return userData;
+        }),
+        count: users.count,
+      };
     })
     .catch((error) => {
       console.error('Error fetching users:', error);

@@ -14,6 +14,8 @@ interface IOrder {
   fecha: Date;
   usuario_id: number;
   estado: OrderStatus;
+
+  items?: OrderItem[];
 }
 
 type OrderCreationAttributes = Optional<IOrder, 'id'>;

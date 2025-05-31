@@ -9,7 +9,7 @@ interface IBook {
   titulo: string;
   descripcion: string;
   precio: number;
-  imagen: string;
+  imagen_url: string;
   autor_id: number;
 }
 
@@ -36,7 +36,7 @@ Book.init(
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    imagen: {
+    imagen_url: {
       type: DataTypes.STRING,
       allowNull: false,
     },
