@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "titulo": "Cien años de soledad",
+    "descripcion": "Saga familiar en el pueblo ficticio de Macondo.",
+    "precio": 3500,
+    "imagen": "/static/img/cien-anos-de-soledad.jpg",
+    "autor_id": 1
+  },
+  {
+    "id": 2,
+    "titulo": "Harry Potter y la piedra filosofal",
+    "descripcion": "Primer libro de la saga del joven mago Harry Potter.",
+    "precio": 4200,
+    "imagen": "/static/img/harry-potter.jpg",
+    "autor_id": 2
+  },
+  {
+    "id": 3,
+    "titulo": "1984",
+    "descripcion": "Distopía sobre una sociedad totalitaria.",
+    "precio": 3100,
+    "imagen": "/static/img/1984.jpg",
+    "autor_id": 3
+  },
+  {
+    "id": 4,
+    "titulo": "Rebelión en la granja",
+    "descripcion": "Una sátira política sobre la revolución rusa.",
+    "precio": 2900,
+    "imagen": "/static/img/rebelion-en-la-granja.jpg",
+    "autor_id": 3
+  }
+]

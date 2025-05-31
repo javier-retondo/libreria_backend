@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "nombre": "Gabriel García Márquez",
+    "biografia": "Escritor colombiano, autor de Cien años de soledad.",
+    "fecha_nacimiento": "1927-03-06",
+    "nacionalidad": "Colombiana"
+  },
+  {
+    "id": 2,
+    "nombre": "J.K. Rowling",
+    "biografia": "Autora británica conocida por la saga de Harry Potter.",
+    "fecha_nacimiento": "1965-07-31",
+    "nacionalidad": "Británica"
+  },
+  {
+    "id": 3,
+    "nombre": "George Orwell",
+    "biografia": "Escritor británico, autor de 1984 y Rebelión en la granja.",
+    "fecha_nacimiento": "1903-06-25",
+    "nacionalidad": "Británica"
+  }
+]

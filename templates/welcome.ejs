@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bienvenido a Librería Aurora</title>
+    <style>
+      :root {
+        --primary-color: #4a90e2;
+        --secondary-color: #ffffff;
+        --accent-color: #f0f4f8;
+        --text-color: #333;
+        --border-radius: 8px;
+      }
+
+      body {
+        background-color: var(--accent-color);
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        color: var(--text-color);
+      }
+
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background-color: var(--secondary-color);
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: var(--primary-color);
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        line-height: 1.6;
+      }
+
+      .credentials {
+        background-color: #e9f1fb;
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        margin-top: 1rem;
+        font-family: monospace;
+      }
+
+      .footer {
+        margin-top: 2rem;
+        font-size: 0.9rem;
+        text-align: center;
+        color: #777;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>¡Bienvenido a Librería Aurora!</h1>
+      <p>Hola <strong><%= nombre %></strong>,</p>
+      <p>
+        Gracias por registrarte en nuestra tienda de libros online. A
+        continuación te compartimos tus credenciales de acceso:
+      </p>
+
+      <div class="credentials">
+        <p><strong>Email:</strong> <%= email %></p>
+        <p><strong>Contraseña:</strong> <%= password %></p>
+      </div>
+      <p>Una vez inicies sesión se te pedirá una nueva contraseña</p>
+      <p>
+        Podrás iniciar sesión en nuestro sitio web y comenzar a explorar una
+        amplia colección de libros seleccionados especialmente para vos.
+      </p>
+
+      <p>¡Gracias por confiar en nosotros!</p>
+
+      <div class="footer">
+        © <%= new Date().getFullYear() %> Librería Aurora. Todos los derechos
+        reservados.
+      </div>
+    </div>
+  </body>
+</html>

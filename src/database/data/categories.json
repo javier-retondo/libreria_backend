@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "nombre": "Ficción",
+    "descripcion": "Obras narrativas imaginarias o inventadas."
+  },
+  {
+    "id": 2,
+    "nombre": "Ciencia Ficción",
+    "descripcion": "Historias basadas en avances tecnológicos o futuros hipotéticos."
+  },
+  {
+    "id": 3,
+    "nombre": "Fantasía",
+    "descripcion": "Relatos con elementos mágicos y mundos imaginarios."
+  }
+]

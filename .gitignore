@@ -2,5 +2,6 @@ node_modules/
 node_modules
 dist
 dist/
+public
 .env
 package-lock.json

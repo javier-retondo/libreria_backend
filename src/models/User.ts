@@ -10,9 +10,9 @@ interface IUser {
   id?: number;
   nombre: string;
   email: string;
-  password: string;
+  password?: string;
   rol: UserRole;
-  provisional: boolean;
+  pass_provisional: boolean;
 }
 
 type UserCreationAttributes = Optional<IUser, 'id'>;
@@ -43,7 +43,7 @@ User.init(
       type: DataTypes.ENUM(UserRole.ADMIN, UserRole.USER),
       defaultValue: UserRole.USER,
     },
-    provisional: {
+    pass_provisional: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
@@ -56,6 +56,12 @@ User.init(
       plural: 'usuarios',
     },
     timestamps: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ['email'],
+      },
+    ],
   },
 );
 

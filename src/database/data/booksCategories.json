@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "libro_id": 1,
+    "categoria_id": 1
+  },
+  {
+    "id": 2,
+    "libro_id": 2,
+    "categoria_id": 3
+  },
+  {
+    "id": 3,
+    "libro_id": 3,
+    "categoria_id": 2
+  },
+  {
+    "id": 4,
+    "libro_id": 4,
+    "categoria_id": 1
+  },
+  {
+    "id": 5,
+    "libro_id": 3,
+    "categoria_id": 1
+  }
+]
