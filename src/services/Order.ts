@@ -1,6 +1,13 @@
-import { Op } from 'sequelize';
+import { FindOptions, Op, WhereOptions } from 'sequelize';
 import sequelize from '../database';
-import { IOrder, IOrderItem, Order, OrderItem } from '../models';
+import {
+  IOrder,
+  IOrderItem,
+  Order,
+  OrderItem,
+  OrderStatus,
+  User,
+} from '../models';
 
 const createOrder = async (
   orderData: IOrder,
@@ -31,7 +38,10 @@ const createOrder = async (
 
 const getOrderById = async (id: number): Promise<IOrder> => {
   const order = await Order.findByPk(id, {
-    include: [{ model: OrderItem, as: 'items' }],
+    include: [
+      { model: OrderItem, as: 'items' },
+      { model: User, as: 'usuario' },
+    ],
   });
   if (!order) {
     console.error(`Order with ID ${id} not found`);
@@ -47,7 +57,9 @@ const getOrders = async (
     sortBy: keyof IOrder;
     sortOrder: 'ASC' | 'DESC';
   },
-  search?: string,
+  estado: OrderStatus,
+  usuario_id?: number[],
+  libro_id?: number[],
 ): Promise<{
   rows: IOrder[];
   count: number;
@@ -59,17 +71,59 @@ const getOrders = async (
     sortOrder = 'ASC',
   } = pagination;
 
-  const where: any = {};
-  if (search) {
-    where['$usuario.nombre$'] = { [Op.iLike]: `%${search}%` };
+  const where: WhereOptions<IOrder> = {};
+
+  if (usuario_id && usuario_id.length > 0) {
+    where['id'] = usuario_id;
   }
 
-  const orders = await Order.findAndCountAll({
+  if (OrderStatus) {
+    where['estado'] = estado;
+  }
+
+  let ordersIds: number[] = [];
+
+  const attributes: FindOptions<IOrder>['attributes'] =
+    sortBy !== 'id' ? ['id', sortBy] : ['id'];
+
+  const ordersCount = await Order.findAndCountAll({
     where,
+    attributes,
+    include: [
+      {
+        model: OrderItem,
+        as: 'items',
+        attributes: [],
+        where: [
+          {
+            producto_id:
+              libro_id && libro_id.length > 0
+                ? { [Op.in]: libro_id }
+                : undefined,
+          },
+        ],
+      },
+    ],
+    raw: true,
+    order: [[sortBy, sortOrder]],
+    offset: (page - 1) * pageSize,
+    limit: pageSize,
+  });
+
+  ordersIds = ordersCount.rows.map((order) => order.dataValues.id as number);
+
+  const orders = await Order.findAndCountAll({
+    where: { id: { [Op.in]: ordersIds } },
     order: [[sortBy, sortOrder]],
     limit: pageSize,
     offset: (page - 1) * pageSize,
-    include: [{ model: OrderItem, as: 'items' }],
+    include: [
+      { model: OrderItem, as: 'items' },
+      {
+        model: User,
+        as: 'usuario',
+      },
+    ],
   });
 
   return {
@@ -77,3 +131,17 @@ const getOrders = async (
     count: orders.count,
   };
 };
+
+const updateStatus = async (
+  id: number,
+  estado: OrderStatus.COMPLETED | OrderStatus.CANCELED,
+): Promise<IOrder> => {
+  const order = await Order.findByPk(id);
+  if (order?.dataValues.estado !== OrderStatus.PENDING) {
+    throw new Error("El estado de la orden tiene que ser 'pendiente'");
+  }
+  await order.update({ estado });
+  return order.dataValues;
+};
+
+export { createOrder, getOrderById, getOrders, updateStatus };

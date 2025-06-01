@@ -13,11 +13,10 @@ const createBook = async (bookData: IBook): Promise<IBook> => {
 const getBookById = async (id: number): Promise<IBook> => {
   const book = await Book.findByPk(id, {
     include: [
-      { model: Author, as: 'autor', attributes: ['id', 'nombre'] },
+      { model: Author, as: 'autor' },
       {
         model: Category,
         as: 'categorias',
-        attributes: ['id', 'nombre', 'descripcion'],
         through: { attributes: [] },
       },
     ],
@@ -90,20 +89,22 @@ const getBooks = async (
   const attributes: FindOptions<IBook>['attributes'] =
     sortBy !== 'id' ? ['id', sortBy] : ['id'];
   const booksWithCategories = await Book.findAndCountAll({
+    where,
     attributes,
-    include:
-      categorias && categorias.length > 0
-        ? [
-            {
-              model: Category,
-              as: 'categorias',
-              attributes: [],
-              where: {
+    include: [
+      {
+        model: Category,
+        as: 'categorias',
+        attributes: [],
+        required: categorias && categorias.length > 0,
+        where:
+          categorias && categorias.length > 0
+            ? {
                 categoria_id: { [Op.in]: categorias },
-              },
-            },
-          ]
-        : undefined,
+              }
+            : undefined,
+      },
+    ],
     raw: true,
     order: [[sortBy, sortOrder]],
     offset: (page - 1) * pageSize,
@@ -114,21 +115,13 @@ const getBooks = async (
     (book) => book.dataValues.id as number,
   );
 
-  if (booksIds.length > 0) {
-    where = [{ id: { [Op.in]: booksIds } }];
-  }
-
   const books = await Book.findAndCountAll({
     where: { id: { [Op.in]: booksIds } },
-    order: booksIds.length > 0 ? [[sortBy, sortOrder]] : undefined,
-    offset: booksIds.length > 0 ? (page - 1) * pageSize : undefined,
-    limit: booksIds.length > 0 ? pageSize : undefined,
     include: [
-      { model: Author, as: 'autor', attributes: ['id', 'nombre'] },
+      { model: Author, as: 'autor' },
       {
         model: Category,
         as: 'categorias',
-        attributes: ['id', 'nombre', 'descripcion'],
         through: { attributes: [] },
       },
     ],
